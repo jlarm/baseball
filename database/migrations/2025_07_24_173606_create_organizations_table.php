@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
+            $table->string('zip_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();

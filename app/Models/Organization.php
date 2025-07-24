@@ -13,4 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 final class Organization extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'uuid' => 'string',
+    ];
 }
