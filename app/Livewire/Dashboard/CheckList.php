@@ -10,20 +10,31 @@ use Livewire\Component;
 
 final class CheckList extends Component
 {
+    public ?Organization $organization = null;
+
     public int $totalSteps = 0;
 
     public int $completedSteps = 0;
 
     public float $percentComplete = 0;
 
+    /** @var array<int, array{title: string, description: string, routeName: string, completed: bool}> */
     public array $steps = [];
 
     public function mount(): void
     {
+        $this->organization = Organization::first();
         $this->steps = $this->buildSteps();
         $this->totalSteps = count($this->steps);
-        $this->completedSteps = count(array_filter($this->steps, static fn ($step): bool => $step['completed'] === true));
+        $this->completedSteps = count(array_filter($this->steps, static fn (array $step): bool => $step['completed']));
         $this->percentComplete = $this->totalSteps === 0 ? 0 : round($this->completedSteps / $this->totalSteps * 100);
+    }
+
+    public function skipSetup(): void
+    {
+        $this->organization?->update([
+            'checklist_completed' => true,
+        ]);
     }
 
     public function render(): View
@@ -31,6 +42,7 @@ final class CheckList extends Component
         return view('livewire.dashboard.check-list');
     }
 
+    /** @return array<int, array{title: string, description: string, routeName: string, completed: bool}> */
     private function buildSteps(): array
     {
         return [

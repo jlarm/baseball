@@ -33,4 +33,9 @@
         </flux:card>
         @endforeach
     </div>
+    <div class="mt-5 flex justify-center">
+        @if($organization)
+        <flux:button wire:click="skipSetup">Skip for now</flux:button>
+        @endif
+    </div>
 </div>

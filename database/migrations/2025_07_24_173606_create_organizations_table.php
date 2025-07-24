@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('checklist_completed')->default(false);
             $table->timestamps();
         });
     }
