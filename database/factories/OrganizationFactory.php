@@ -15,7 +15,7 @@ final class OrganizationFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => $this->faker->uuid(),
+            'uuid' => fake()->uuid(),
             'name' => $this->faker->name(),
             'logo_path' => $this->faker->word(),
             'address' => $this->faker->address(),
