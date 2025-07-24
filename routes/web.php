@@ -15,6 +15,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('organization-settings', App\Livewire\SettingsPage::class)
+    ->middleware(['auth', 'verified'])
+    ->name('org.settings');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
