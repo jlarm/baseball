@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\State;
 use App\Models\Organization;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,7 +21,7 @@ final class OrganizationFactory extends Factory
             'logo_path' => $this->faker->word(),
             'address' => $this->faker->address(),
             'city' => $this->faker->city(),
-            'state' => $this->faker->word(),
+            'state' => $this->faker->randomElement(State::cases()),
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'created_at' => CarbonImmutable::now(),

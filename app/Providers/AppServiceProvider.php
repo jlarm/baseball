@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Services\OrganizationService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -17,7 +19,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(OrganizationService::class);
     }
 
     /**
@@ -29,5 +31,21 @@ final class AppServiceProvider extends ServiceProvider
         Model::unguard();
         DB::prohibitDestructiveCommands(app()->isProduction());
         Date::use(CarbonImmutable::class);
+
+        $this->registerGlobalViewData();
+    }
+
+    private function registerGlobalViewData(): void
+    {
+        View::composer('*', function ($view): void {
+            $organizationService = app(OrganizationService::class);
+
+            $view->with([
+                'currentOrganization' => $organizationService->current(),
+                'organizationName' => $organizationService->name(),
+                'organizationLogoUrl' => $organizationService->logoUrl(),
+                'hasOrganizationLogo' => $organizationService->hasLogo(),
+            ]);
+        });
     }
 }
