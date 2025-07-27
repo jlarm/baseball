@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Dashboard;
 
 use App\Models\Organization;
+use App\Services\OrganizationService;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -21,10 +22,10 @@ final class CheckList extends Component
     /** @var array<int, array{title: string, description: string, routeName: string, completed: bool}> */
     public array $steps = [];
 
-    public function mount(): void
+    public function mount(OrganizationService $organizationService): void
     {
-        $this->organization = Organization::first();
-        $this->steps = $this->buildSteps();
+        $this->organization = $organizationService->current();
+        $this->steps = $this->buildSteps($organizationService);
         $this->totalSteps = count($this->steps);
         $this->completedSteps = count(array_filter($this->steps, static fn (array $step): bool => $step['completed']));
         $this->percentComplete = $this->totalSteps === 0 ? 0 : round($this->completedSteps / $this->totalSteps * 100);
@@ -43,14 +44,14 @@ final class CheckList extends Component
     }
 
     /** @return array<int, array{title: string, description: string, routeName: string, completed: bool}> */
-    private function buildSteps(): array
+    private function buildSteps(OrganizationService $organizationService): array
     {
         return [
             [
                 'title' => 'Organization Details',
                 'description' => 'Add details about the organization',
                 'routeName' => 'org.settings',
-                'completed' => Organization::exists(),
+                'completed' => $organizationService->current() !== null,
             ],
             [
                 'title' => 'Divisions',

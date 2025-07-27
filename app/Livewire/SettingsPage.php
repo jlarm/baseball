@@ -6,6 +6,7 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\OrganizationForm;
 use App\Models\Organization;
+use App\Services\OrganizationService;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -24,9 +25,9 @@ final class SettingsPage extends Component
 
     public ?string $temporaryImageUrl = null;
 
-    public function mount(): void
+    public function mount(OrganizationService $organizationService): void
     {
-        $this->organization = Organization::first();
+        $this->organization = $organizationService->current();
 
         if ($this->organization instanceof Organization) {
             $this->form->fillFromOrganization($this->organization);

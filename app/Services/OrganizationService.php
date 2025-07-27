@@ -9,11 +9,19 @@ use Illuminate\Support\Facades\Cache;
 
 final class OrganizationService
 {
+    private static ?Organization $cachedOrganization = null;
+    private static bool $organizationLoaded = false;
+
     public function current(): ?Organization
     {
-        return Cache::remember('current_organization', 3600, function () {
-            return Organization::first();
-        });
+        if (! self::$organizationLoaded) {
+            self::$cachedOrganization = Cache::remember('current_organization', 3600, function () {
+                return Organization::first();
+            });
+            self::$organizationLoaded = true;
+        }
+
+        return self::$cachedOrganization;
     }
 
     public function name(): string
@@ -40,5 +48,7 @@ final class OrganizationService
     public function clearCache(): void
     {
         Cache::forget('current_organization');
+        self::$cachedOrganization = null;
+        self::$organizationLoaded = false;
     }
 }
