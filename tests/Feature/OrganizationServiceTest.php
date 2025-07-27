@@ -19,6 +19,7 @@ test('organization service returns current organization', function () {
 
 test('organization service returns app name when no organization exists', function () {
     $service = app(OrganizationService::class);
+    $service->clearCache(); // Clear any cached organization data
 
     expect($service->name())->toBe(config('app.name'));
 });
@@ -65,7 +66,7 @@ test('organization cache is cleared when organization is updated', function () {
     $organization = Organization::factory()->create(['name' => 'Original Name']);
 
     $service = app(OrganizationService::class);
-    
+
     // Cache the organization
     $service->current();
     expect(Cache::has('current_organization'))->toBeTrue();
@@ -96,7 +97,7 @@ test('global view data is available in livewire component', function () {
     $user = User::factory()->create();
 
     $component = $this->actingAs($user)
-        ->livewire(\App\Livewire\SettingsPage::class);
+        ->livewire(App\Livewire\SettingsPage::class);
 
     // The global view data should be accessible through the component
     expect($component->viewData('organizationName'))->toBe('View Test Org');

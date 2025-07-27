@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\OrganizationForm;
 use App\Models\Organization;
 use App\Services\OrganizationService;
+use Flux\Flux;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -40,7 +41,11 @@ final class SettingsPage extends Component
 
         $this->temporaryImageUrl = null;
 
-        session()->flash('status', 'Organization settings saved successfully.');
+        Flux::toast(
+            text: 'Organization settings saved successfully.',
+            heading: 'Success',
+            variant: 'success',
+        );
     }
 
     public function updatedFormLogo(): void

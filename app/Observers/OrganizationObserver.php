@@ -15,12 +15,12 @@ final class OrganizationObserver
         $organization->uuid = (string) Str::uuid();
     }
 
-    public function saved(Organization $organization): void
+    public function saved(): void
     {
         app(OrganizationService::class)->clearCache();
     }
 
-    public function deleted(Organization $organization): void
+    public function deleted(): void
     {
         app(OrganizationService::class)->clearCache();
     }

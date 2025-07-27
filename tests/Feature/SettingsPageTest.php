@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Livewire\SettingsPage;
 use App\Models\Organization;
 use App\Models\User;
+use App\Services\OrganizationService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,6 +36,7 @@ test('settings page loads organization data when exists', function () {
 
 test('settings page handles null organization', function () {
     $user = User::factory()->create();
+    app(OrganizationService::class)->clearCache(); // Clear cache to ensure no organization
 
     $this->actingAs($user)
         ->livewire(SettingsPage::class)
@@ -45,6 +47,7 @@ test('settings page handles null organization', function () {
 
 test('settings page can create organization', function () {
     $user = User::factory()->create();
+    app(OrganizationService::class)->clearCache(); // Clear cache to ensure no organization
 
     $this->actingAs($user)
         ->livewire(SettingsPage::class)
@@ -84,6 +87,7 @@ test('settings page can update existing organization', function () {
 test('settings page can upload logo', function () {
     Storage::fake('public');
     $user = User::factory()->create();
+    app(OrganizationService::class)->clearCache(); // Clear cache to ensure no organization
     $file = UploadedFile::fake()->image('logo.png', 100, 100);
 
     $this->actingAs($user)
@@ -100,6 +104,7 @@ test('settings page can upload logo', function () {
 
 test('settings page shows temporary image url during upload', function () {
     $user = User::factory()->create();
+    app(OrganizationService::class)->clearCache(); // Clear cache to ensure no organization
     $file = UploadedFile::fake()->image('logo.png', 100, 100);
 
     $component = $this->actingAs($user)

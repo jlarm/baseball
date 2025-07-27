@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('seasons', function (Blueprint $table) {
+        Schema::create('seasons', function (Blueprint $table): void {
             $table->id();
             $table->string('year');
             $table->string('status');

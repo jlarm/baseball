@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View as ViewContract;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +38,7 @@ final class AppServiceProvider extends ServiceProvider
 
     private function registerGlobalViewData(): void
     {
-        View::composer('*', function ($view): void {
+        View::composer('*', function (ViewContract $view): void {
             $organizationService = app(OrganizationService::class);
 
             $view->with([

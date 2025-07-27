@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Cache;
 final class OrganizationService
 {
     private static ?Organization $cachedOrganization = null;
+
     private static bool $organizationLoaded = false;
 
     public function current(): ?Organization
     {
         if (! self::$organizationLoaded) {
-            self::$cachedOrganization = Cache::remember('current_organization', 3600, function () {
-                return Organization::first();
-            });
+            self::$cachedOrganization = Cache::remember('current_organization', 3600, fn () => Organization::first());
             self::$organizationLoaded = true;
         }
 
@@ -26,7 +25,9 @@ final class OrganizationService
 
     public function name(): string
     {
-        return $this->current()?->name ?? config('app.name', 'Application');
+        $organization = $this->current();
+
+        return $organization instanceof Organization ? $organization->name : config('app.name', 'Application');
     }
 
     public function logoUrl(): ?string
@@ -37,7 +38,7 @@ final class OrganizationService
             return null;
         }
 
-        return asset('storage/' . $logoPath);
+        return asset('storage/'.$logoPath);
     }
 
     public function hasLogo(): bool

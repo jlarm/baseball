@@ -21,6 +21,9 @@
             @if($step['completed'])
                 <flux:button class="w-full" disabled>Completed</flux:button>
             @else
+                @if($step['modal'])
+                    @livewire($step['modalComponent'])
+                @else
                 <flux:button
                     wire:navigate
                     href="{{ route($step['routeName']) }}"
@@ -29,6 +32,7 @@
                 >
                     Start
                 </flux:button>
+                @endif
             @endif
         </flux:card>
         @endforeach
