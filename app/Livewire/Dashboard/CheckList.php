@@ -54,6 +54,12 @@ final class CheckList extends Component
                 'completed' => $organizationService->current() !== null,
             ],
             [
+                'title' => 'Season',
+                'description' => 'Add details about the season',
+                'routeName' => 'org.settings',
+                'completed' => false,
+            ],
+            [
                 'title' => 'Divisions',
                 'description' => 'Add divisions to the organization',
                 'routeName' => 'org.settings',
