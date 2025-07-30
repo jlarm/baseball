@@ -17,7 +17,7 @@ final class OrganizationFactory extends Factory
     {
         return [
             'uuid' => fake()->uuid(),
-            'name' => $this->faker->name(),
+            'name' => $this->faker->company(),
             'logo_path' => $this->faker->word(),
             'address' => $this->faker->address(),
             'city' => $this->faker->city(),

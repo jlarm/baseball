@@ -6,5 +6,6 @@
     @endif
 </div>
 <div class="ms-1 grid flex-1 text-start text-sm">
+    <span class="truncate leading-tight font-semibold">{{ season_year() }}</span>
     <span class="mb-0.5 truncate leading-tight font-semibold">{{ $organizationName }}</span>
 </div>

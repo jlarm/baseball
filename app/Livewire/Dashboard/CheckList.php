@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire\Dashboard;
 
-use App\Enums\Status;
 use App\Models\Organization;
-use App\Models\Season;
 use App\Services\OrganizationService;
+use App\Services\SeasonService;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -29,15 +28,16 @@ final class CheckList extends Component
     public function refreshChecklist(): void
     {
         $organizationService = app(OrganizationService::class);
-        $this->steps = $this->buildSteps($organizationService);
+        $seasonService = app(SeasonService::class);
+        $this->steps = $this->buildSteps($organizationService, $seasonService);
         $this->completedSteps = count(array_filter($this->steps, static fn (array $step): bool => $step['completed']));
         $this->percentComplete = $this->totalSteps === 0 ? 0 : round($this->completedSteps / $this->totalSteps * 100);
     }
 
-    public function mount(OrganizationService $organizationService): void
+    public function mount(OrganizationService $organizationService, SeasonService $seasonService): void
     {
         $this->organization = $organizationService->current();
-        $this->steps = $this->buildSteps($organizationService);
+        $this->steps = $this->buildSteps($organizationService, $seasonService);
         $this->totalSteps = count($this->steps);
         $this->completedSteps = count(array_filter($this->steps, static fn (array $step): bool => $step['completed']));
         $this->percentComplete = $this->totalSteps === 0 ? 0 : round($this->completedSteps / $this->totalSteps * 100);
@@ -56,7 +56,7 @@ final class CheckList extends Component
     }
 
     /** @return array<int, array{title: string, description: string, modal: bool, routeName?: string, modalComponent?: string, completed: bool}> */
-    private function buildSteps(OrganizationService $organizationService): array
+    private function buildSteps(OrganizationService $organizationService, SeasonService $seasonService): array
     {
         return [
             [
@@ -71,7 +71,7 @@ final class CheckList extends Component
                 'description' => 'Add details about the season',
                 'modal' => true,
                 'modalComponent' => 'season.create-season-modal',
-                'completed' => Season::first()?->status === Status::ACTIVE,
+                'completed' => $seasonService->isActive(),
             ],
             [
                 'title' => 'Divisions',
