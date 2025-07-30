@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Division;
 use App\Models\Organization;
 use App\Services\OrganizationService;
 use App\Services\SeasonService;
@@ -77,8 +78,8 @@ final class CheckList extends Component
                 'title' => 'Divisions',
                 'description' => 'Add divisions to the organization',
                 'modal' => false,
-                'routeName' => 'org.settings',
-                'completed' => false,
+                'routeName' => 'divisions.index',
+                'completed' => Division::exists(),
             ],
             [
                 'title' => 'Teams',

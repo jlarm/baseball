@@ -19,6 +19,10 @@ Route::get('organization-settings', App\Livewire\SettingsPage::class)
     ->middleware(['auth', 'verified'])
     ->name('org.settings');
 
+Route::get('divisions', App\Livewire\Division\Index::class)
+    ->middleware(['auth', 'verified'])
+    ->name('divisions.index');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
