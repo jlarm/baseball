@@ -20,7 +20,7 @@ final class CreateModal extends Component
 
         $currentSeason = current_season();
 
-        if ($currentSeason) {
+        if ($currentSeason instanceof \App\Models\Season) {
             $currentSeason->divisions()->create([
                 'name' => $this->name,
             ]);

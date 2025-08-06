@@ -23,6 +23,10 @@ Route::get('divisions', App\Livewire\Division\Index::class)
     ->middleware(['auth', 'verified'])
     ->name('divisions.index');
 
+Route::get('divisions/{division}', App\Livewire\Division\Show::class)
+    ->middleware(['auth', 'verified'])
+    ->name('divisions.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Division;
 
 use App\Models\Division;
+use App\Models\Season;
 use Flux\Flux;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
@@ -13,7 +14,7 @@ use Livewire\Component;
 
 final class Index extends Component
 {
-    public function delete($id): void
+    public function delete(int $id): void
     {
         $division = Division::find($id);
 
@@ -36,7 +37,7 @@ final class Index extends Component
     public function render(): View
     {
         $currentSeason = current_season();
-        $divisions = $currentSeason ? $currentSeason->divisions()->orderBy('name')->get() : collect();
+        $divisions = $currentSeason instanceof Season ? $currentSeason->divisions()->orderBy('name')->get() : collect();
 
         return view('livewire.division.index', [
             'divisions' => $divisions,

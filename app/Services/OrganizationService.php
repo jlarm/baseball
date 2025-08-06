@@ -16,7 +16,7 @@ final class OrganizationService
     public function current(): ?Organization
     {
         if (! self::$organizationLoaded) {
-            self::$cachedOrganization = Cache::remember('current_organization', 3600, fn () => Organization::first());
+            self::$cachedOrganization = Cache::remember('current_organization', 3600, static fn () => Organization::first());
             self::$organizationLoaded = true;
         }
 

@@ -25,14 +25,14 @@ final class SeasonFactory extends Factory
 
     public function active(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => Status::ACTIVE,
         ]);
     }
 
     public function archived(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => Status::ARCHIVED,
         ]);
     }
