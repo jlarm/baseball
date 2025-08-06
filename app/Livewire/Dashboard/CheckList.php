@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Dashboard;
 
-use App\Models\Division;
 use App\Models\Organization;
+use App\Models\Team;
 use App\Services\OrganizationService;
 use App\Services\SeasonService;
 use Illuminate\View\View;
@@ -75,18 +75,11 @@ final class CheckList extends Component
                 'completed' => $seasonService->isActive(),
             ],
             [
-                'title' => 'Divisions',
-                'description' => 'Add divisions to the organization',
-                'modal' => false,
-                'routeName' => 'divisions.index',
-                'completed' => Division::exists(),
-            ],
-            [
                 'title' => 'Teams',
                 'description' => 'Add teams to the divisions',
                 'modal' => false,
                 'routeName' => 'org.settings',
-                'completed' => false,
+                'completed' => Team::exists(),
             ],
             [
                 'title' => 'Players',

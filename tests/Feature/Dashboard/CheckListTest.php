@@ -22,7 +22,7 @@ test('checklist calculates progress correctly when no organization exists', func
 
     $this->actingAs($user)
         ->livewire(CheckList::class)
-        ->assertSet('totalSteps', 5)
+        ->assertSet('totalSteps', 4)
         ->assertSet('completedSteps', 0)
         ->assertSet('percentComplete', 0);
 });
@@ -33,9 +33,9 @@ test('checklist calculates progress correctly when organization exists', functio
 
     $this->actingAs($user)
         ->livewire(CheckList::class)
-        ->assertSet('totalSteps', 5)
+        ->assertSet('totalSteps', 4)
         ->assertSet('completedSteps', 1)
-        ->assertSet('percentComplete', 20);
+        ->assertSet('percentComplete', 25);
 });
 
 test('skip setup marks organization as completed', function () {

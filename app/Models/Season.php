@@ -22,8 +22,8 @@ final class Season extends Model
         'status' => Status::class,
     ];
 
-    public function divisions(): HasMany
+    public function teams(): HasMany
     {
-        return $this->hasMany(Division::class);
+        return $this->hasMany(Team::class);
     }
 }
