@@ -21,15 +21,16 @@ const form = useForm({
     city: props.organization?.city || '',
     state: props.organization?.state || '',
     zip_code: props.organization?.zip_code || '',
-    logo: null,
+    logo: null as File | string | null,
     _method: props.organization ? 'PUT' : 'POST',
 });
 
-const logoPreview = ref(null);
+const logoPreview = ref<string | null>(null);
 const currentLogo = computed(() => props.organization?.logo);
 
-const handleLogoChange = (event) => {
-    const file = event.target.files[0];
+const handleLogoChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.[0];
     if (file) {
         form.logo = file;
         logoPreview.value = URL.createObjectURL(file);
@@ -39,7 +40,7 @@ const handleLogoChange = (event) => {
 const removeLogo = () => {
     form.logo = 'REMOVE';
     logoPreview.value = null;
-    const fileInput = document.getElementById('logo');
+    const fileInput = document.getElementById('logo') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
 }
 
