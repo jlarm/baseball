@@ -47,12 +47,25 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'organization' => Organization::current(),
+            'organization' => $this->getOrganization(),
             'ziggy' => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
+    }
+
+    /**
+     * Get the current organization safely, handling cases where the table doesn't exist.
+     */
+    private function getOrganization(): ?Organization
+    {
+        try {
+            return Organization::current();
+        } catch (\Exception $e) {
+            // Table doesn't exist or other database error
+            return null;
+        }
     }
 }
