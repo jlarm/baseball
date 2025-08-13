@@ -2,7 +2,7 @@
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import { useOrganization } from '@/composables/useOrganization';
 
-const { hasOrganization, organizationName, organizationLogo } = useOrganization();
+const { organizationName, organizationLogo } = useOrganization();
 </script>
 
 <template>
