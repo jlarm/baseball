@@ -1,0 +1,24 @@
+{
+    "$schema": "https://shadcn-vue.com/schema.json",
+    "style": "default",
+    "typescript": true,
+    "tsx": false,
+    "tailwind": {
+        "config": "tailwind.config.js",
+        "css": "resources/css/app.css",
+        "baseColor": "neutral",
+        "cssVariables": true,
+        "prefix": ""
+    },
+    "aliases": {
+        "components": "@/components",
+        "utils": "@/lib/utils",
+        "ui": "@/components/ui"
+    },
+    "framework": "vue",
+    "resolvedPaths": {
+        "components": "resources/js/components",
+        "utils": "resources/js/lib/utils",
+        "ui": "resources/js/components/ui"
+    }
+}
