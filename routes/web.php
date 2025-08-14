@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,6 +24,10 @@ Route::post('organization', [OrganizationController::class, 'store'])
 Route::put('organization', [OrganizationController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('organization.update');
+
+Route::get('seasons', [SeasonController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('seasons.index');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
